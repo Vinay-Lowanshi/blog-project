@@ -1,0 +1,3 @@
+const postcomment=(req,res)=>{
+    
+}

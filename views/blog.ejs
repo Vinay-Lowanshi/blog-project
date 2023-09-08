@@ -1,0 +1,73 @@
+<!-- blogs.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog Page</title>
+  <style>
+    /* Style the blog entries */
+    .blog-entry {
+      margin-bottom: 20px;
+    }
+
+    /* Style the blog title */
+    .blog-title {
+      font-weight: bold;
+      color: #007bff; /* Blue color for the title */
+    }
+
+    /* Style the blog author */
+    .blog-author {
+      color: #4caf50; /* Green color for the author */
+    }
+
+    /* Style the blog description */
+    .blog-description {
+      color: #ff5722; /* Orange color for the description */
+    }
+
+    /* Style the comment section */
+    .comment-section {
+      margin-top: 20px;
+    }
+
+    /* Style the comment form */
+    .comment-form {
+      margin-top: 10px;
+    }
+
+    /* Style the comment text */
+    .comment-text {
+      color: #ff5722; /* Orange color for comments */
+    }
+  </style>
+</head>
+<body>
+  <h1>My Blog Page</h1>
+
+  <% blogs.forEach((blog) => { %>
+    <div class="blog-entry">
+      <p class="blog-title"><%= blog.title %></p>
+      <p class="blog-author">Author: <%= blog.author %></p>
+      <p class="blog-description">Description: <%= blog.description %></p>
+
+      <!-- Comment section for each blog -->
+      <div class="comment-section">
+        <h3>Comments:</h3>
+
+        <!-- List comments for this blog -->
+        <!-- <ul>
+          <% blog.comments.forEach((comment) => { %>
+            <li class="comment-text"><%= comment.text %></li>
+          <!-- <% }); %> -->
+        </ul> -->
+
+        <!-- Comment form for adding new comments -->
+        <form class="comment-form" method="POST" action="/blog/<%= blog.id %>/comments">
+          <input type="text" name="comment" placeholder="Add a comment" required>
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+  <% }); %>
+</body>
+</html>
