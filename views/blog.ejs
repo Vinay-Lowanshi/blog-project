@@ -3,71 +3,144 @@
 <html>
 <head>
   <title>Blog Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap">
   <style>
+    /* Reset some default styles */
+    body, h1, h2, p {
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+  color: #4caf50;
+  text-align: center; /* Align text in the center horizontally */
+  display: flex; /* Enable flexbox layout */
+  justify-content: center; /* Align content horizontally in the center */
+  align-items: center; /* Align content vertically in the center */
+  background-color: black;
+}
+
+
+    /* Apply a custom font */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f0f0f0; /* Light gray background */
+      color: #333; /* Dark text color */
+    }
+
+    /* Style the container */
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      margin: 20px auto;
+      text-align: left;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+      padding: 20px;
+    }
+
     /* Style the blog entries */
     .blog-entry {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     }
 
     /* Style the blog title */
     .blog-title {
       font-weight: bold;
-      color: #007bff; /* Blue color for the title */
+      color: #4caf50; /* Green color for the title */
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
     /* Style the blog author */
     .blog-author {
-      color: #4caf50; /* Green color for the author */
+      color: #333; /* Dark text color for the author */
+      font-style: italic;
     }
 
     /* Style the blog description */
     .blog-description {
-      color: #ff5722; /* Orange color for the description */
+      color: #666; /* Gray color for the description */
+      margin-top: 10px;
     }
 
     /* Style the comment section */
     .comment-section {
       margin-top: 20px;
-    }
-
-    /* Style the comment form */
-    .comment-form {
-      margin-top: 10px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
     }
 
     /* Style the comment text */
     .comment-text {
-      color: #ff5722; /* Orange color for comments */
+      color: #4caf50; /* Green color for comments */
+      margin-bottom: 10px;
+    }
+
+    /* Style the comment form */
+    .comment-form {
+      margin-top: 20px;
+    }
+
+    /* Style the input and button in the comment form */
+    .comment-form input[type="text"],
+    .comment-form button {
+      background-color: #4caf50; /* Green color for input and button */
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Hover effect for buttons */
+    .comment-form button:hover {
+      background-color: #333;
     }
   </style>
 </head>
 <body>
-  <h1>My Blog Page</h1>
-
-  <% blogs.forEach((blog) => { %>
-    <div class="blog-entry">
-      <p class="blog-title"><%= blog.title %></p>
-      <p class="blog-author">Author: <%= blog.author %></p>
-      <p class="blog-description">Description: <%= blog.description %></p>
-
-      <!-- Comment section for each blog -->
-      <div class="comment-section">
-        <h3>Comments:</h3>
-
-        <!-- List comments for this blog -->
-        <!-- <ul>
-          <% blog.comments.forEach((comment) => { %>
-            <li class="comment-text"><%= comment.text %></li>
-          <!-- <% }); %> -->
-        </ul> -->
-
-        <!-- Comment form for adding new comments -->
-        <form class="comment-form" method="POST" action="/blog/<%= blog.id %>/comments">
-          <input type="text" name="comment" placeholder="Add a comment" required>
-          <button type="submit">Post</button>
-        </form>
-      </div>
+  <div class="container">
+    <div class="buttons">
+      <a href="/register">Register</a>
+      <a href="/">Login</a>
+      <a href="/postblogs/<%= user %>">Post a Blog</a>
+      <% if (user != "") { %>
+        <div  id="log">you are logged in as <b style="color: red;"><%= user %></b> </div>
+      <% } %>
+      
     </div>
-  <% }); %>
+    <h1>My Blog Page</h1>
+
+    <% blogs.forEach((blog) => { %>
+      <div class="blog-entry">
+        <p class="blog-title"><%= blog.title %></p>
+        <p class="blog-author">Author: <%= blog.author %></p>
+        <p class="blog-description">Description: <%= blog.description %></p>
+
+        <!-- Comment section for each blog -->
+        <div class="comment-section">
+          <h3>Comments:</h3>
+
+          <!-- List comments for this blog -->
+          <ul>
+            <% comments.forEach((comment) => { %>
+              <% if (blog.id == comment.sno) { %>
+                <li class="comment-text">
+                  <!-- Create an anchor tag for deleting the comment -->
+                  <%= comment.comment %><a href="/comments/delete/<%= comment.id %>"> Delete  </a> 
+                </li>
+              <% } %>
+            <% }); %>
+          </ul>
+
+          <!-- Comment form for adding new comments -->
+          <form class="comment-form" method="POST" action="/comments/<%= blog.id %>/<%= user %>">
+            <input type="text" name="comment" placeholder="Add a comment" required>
+            <button type="submit">Post</button>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  </div>
 </body>
 </html>

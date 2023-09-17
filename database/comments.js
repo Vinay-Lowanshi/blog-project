@@ -5,11 +5,11 @@ const sequelize = require('./connect.js');
 
 const comments = sequelize.define('comments', {
   // Define your model attributes here
-  id: {
+  sno: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  comments: {
+  comment: {
     type: DataTypes.STRING,
     allowNull: false,
   },

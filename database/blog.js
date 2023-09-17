@@ -1,5 +1,3 @@
-// models/User.js
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('./connect.js');
 
@@ -14,7 +12,7 @@ const blog = sequelize.define('blogs', {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(800), // Limit the description to 200 characters
     allowNull: false,
   },
 
